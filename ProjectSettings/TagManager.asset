@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Coin
+  - Enemy
+  - Dog
+  - Elephant
+  - Giraffe
+  - Hippo
+  - Monkey
+  - Panda
+  - Parrot
+  - Penguin
+  - Pig
+  - Snake
+  - Dog2
+  - Dog3
+  - Dog4
+  - Dog5
+  - Elephant2
+  - Elephant3
+  - Elephant4
+  - Elephant5
+  - Giraffe2
+  - Giraffe3
+  - Giraffe4
+  - Giraffe5
+  - Hippo2
+  - Hippo3
+  - Hippo4
+  - Hippo5
+  - Monkey2
+  - Monkey3
+  - Monkey4
+  - Monkey5
+  - Panda2
+  - Panda3
+  - Panda4
+  - Panda5
+  - Parrot2
+  - Parrot3
+  - Parrot4
+  - Parrot5
+  - Penguin2
+  - Penguin3
+  - Penguin4
+  - Penguin5
+  - Pig2
+  - Pig3
+  - Pig4
+  - Pig5
+  - Snake2
+  - Snake3
+  - Snake4
+  - Snake5
+  - Platform
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1315882165
+    locked: 0
+  - name: ForeGround
+    uniqueID: 316582713
+    locked: 0
+  - name: Player
+    uniqueID: 1519052449
+    locked: 0
+  - name: UI
+    uniqueID: 107311527
+    locked: 0
