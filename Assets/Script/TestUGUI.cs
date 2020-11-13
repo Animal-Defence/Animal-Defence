@@ -5,6 +5,8 @@ using UnityEngine.U2D;
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine.UI;
+
 
 public class TestUGUI : MonoBehaviour
 {
@@ -16,23 +18,39 @@ public class TestUGUI : MonoBehaviour
 
     void Start()
     {
-        //데이터 삭제
-        //PlayerPrefs.DeleteAll();
-        
-        
         //데이터 로드
+        //게임 시작할때마다 로드될것이기 때문에, 나중에 게임 시작??? 할때 생성하던가
+        //예외문을 만들기....
+        //만약 없으면 로드하도록
+        //겟 데이타 없으면 로드??
         DataManager.GetInstance().LoadData<MissionData>("Data/mission_data");
+        testUBUISetting();
+    }
+
+    public void testUBUISetting()
+    {
+        //데이터 삭제
+        PlayerPrefs.DeleteAll();
+        
+        
+        
         //var data = DataManager.GetInstance().GetData<MissionData>(0);
         //Debug.LogFormat("{0} {1} {2}", data.id, data.sprite_name, data.mission_name);
 
 
         //info를 로드합니다
         var json = PlayerPrefs.GetString("game_info");
+        
         if (string.IsNullOrEmpty(json)) // 저장된 파일이 없을경우 True반환
         {
             TestUGUI.gameInfo = new GameInfo();
+            /*
             TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(0, 100));
-            var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);
+            //데이터를 바꾸는 예시!
+            if (TestUGUI.gameInfo.missionInfos[0].id == 0)
+                TestUGUI.gameInfo.missionInfos[0].doingVal = 200;
+            */
+            var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 storing형태로 저장.
             PlayerPrefs.SetString("game_info", gameInfoJson);
         }
         else
@@ -41,11 +59,15 @@ public class TestUGUI : MonoBehaviour
             TestUGUI.gameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
 
         }
+        
 
+        DeleteChilds();
+        missionListItems.Clear();
 
         for (int i = 0; i < 5; i++)
         {
             var listItem = this.CreateListItem();
+            //missionListItems.Clear();
             missionListItems.Add(listItem);
             listItem.btnClaim.onClick.AddListener(() =>
             {
@@ -71,35 +93,63 @@ public class TestUGUI : MonoBehaviour
             {
                 listItem.Init(missionData.id, missionData.sprite_name, MissionName, missionData.animal_name, missionData.goal_val);
             }
-
-
-
         }
 
+        for (int i = 0; i < 5; i++)
+        {
+            setMissionBtnState(i);
+        }
 
     }
 
 
     private void Claim(int id) // 클릭이벤트
     {
+        
         var missionData = DataManager.GetInstance().GetData<MissionData>(id);
         var foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == id);
     
         if(foundMissionInfo != null)
         {
-            if(foundMissionInfo.doingVal == missionData.goal_val)
+            if(foundMissionInfo.doingVal >= missionData.goal_val)
             {
                 //해당 리스트 아이템의 버튼 상태를 바꿔준다.
-                var foundListIten = missionListItems.Find(x => x.id == foundMissionInfo.id);
-                if(foundListIten != null)
+                var foundListItem = missionListItems.Find(x => x.id == foundMissionInfo.id);
+                if(foundListItem != null)
                 {
-                    foundListIten.binderCliam.ChangeState(UIBinder_BtnCliam.eBtnState.Success);
+                    GameObject.Find("UnlockAnimalView").GetComponent<UnlockAnimalView>().setImageAndText(id);
+                    GameObject.Find("U_Animal_P").transform.Find("UnlockAnimalView").gameObject.SetActive(true);
+                    foundListItem.binderCliam.ChangeState(UIBinder_BtnCliam.eBtnState.Success);
+                    int index = TestUGUI.gameInfo.missionInfos.FindIndex(x => x.id == id);
+                    TestUGUI.gameInfo.missionInfos[index].clickedBtn = true;
+                    var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 storing형태로 저장.
+                    PlayerPrefs.SetString("game_info", gameInfoJson);
+                    PlayerPrefs.Save();
                 }
-            
-            
             }
         }
     
+    }
+
+
+    private void setMissionBtnState(int index) { 
+           //var missionData = DataManager.GetInstance().GetData<MissionData>(id);//리스트에서 클릭한것.
+           var foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == index); // id가 i인것을 찾음.
+            if (foundMissionInfo != null)
+            {
+                if (foundMissionInfo.clickedBtn == true)
+                {
+                    //해당 리스트 아이템의 버튼 상태를 바꿔준다.
+                    var foundListIten = missionListItems.Find(x => x.id == foundMissionInfo.id);
+                    //int index = TestUGUI.gameInfo.missionInfos.FindIndex(x => x.id == foundListIten.id);
+                    //foundListIten = missionListItems.Find(x => x.id == index);
+                    if (foundListIten != null)
+                    {
+                        Debug.LogFormat("{0} {1}", index, foundListIten);
+                        foundListIten.binderCliam.ChangeState(UIBinder_BtnCliam.eBtnState.Success);
+                    }
+                }
+            }
     }
 
     private MissionListItem CreateListItem()
@@ -107,6 +157,19 @@ public class TestUGUI : MonoBehaviour
         var listItemGo = Instantiate(this.listItemPrefabs);
         listItemGo.transform.SetParent(contents, false);
         return listItemGo.GetComponent<MissionListItem>();
+    }
+
+    public void DeleteChilds()
+    {
+        Transform allChildren = contents.GetComponentInChildren<Transform>();
+        foreach (Transform child in allChildren)
+        {
+            // 자기 자신의 경우엔 무시 
+            // (게임오브젝트명이 다 다르다고 가정했을 때 통하는 코드)
+            if (child.name == transform.name)
+                return;
+            Destroy(child.gameObject);
+        }
     }
 
 }

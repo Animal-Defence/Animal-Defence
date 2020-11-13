@@ -46,11 +46,16 @@ public class SimpleMonster : MonoBehaviour
 
         if (health <= 0)
         {
-            Player_Coin player_Coin = GameObject.Find("Coin_Point_Text").GetComponent<Player_Coin>();
-            player_Coin.coin_score += enemy_point;
-            player_Coin.coin_text_obj.text = "" + player_Coin.coin_score;
+            Player_Coin player_Coin = GameObject.Find("Player_Coin").GetComponent<Player_Coin>();
+            Player_Coin.coin_score += enemy_point;
+            player_Coin.coin_text_obj.text = "" + Player_Coin.coin_score;
             
             Destroy(gameObject);
+            if (gameObject.tag == "Enemy")
+                EnemyDeathManager.killEnemyNum++;
+            else if (gameObject.tag == "Boss")
+                EnemyDeathManager.killBossNum++;
+
         }
     }
 
