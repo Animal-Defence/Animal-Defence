@@ -34,7 +34,11 @@ public class AnimalAttack : MonoBehaviour
         Rigidbody2D rigid = weapon.GetComponent<Rigidbody2D>();
 
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy"); // Enemy Tag로 적들 찾기
-        if (enemys.Length != 0)
+        if (enemys.Length == 0)
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0); // 적이 없으면 위를 향해 
+        }
+        else
         {
             for (int i = 0; i < enemys.Length; i++)
             {
@@ -52,7 +56,7 @@ public class AnimalAttack : MonoBehaviour
             float angle = Mathf.Atan2(target.y - me.y, target.x - me.x) * Mathf.Rad2Deg;
             gameObject.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         }
-        rigid.AddRelativeForce(Vector2.up * 15, ForceMode2D.Impulse); // 가까운 적을 향해 공격
+        rigid.AddRelativeForce(Vector2.up * 15, ForceMode2D.Impulse); // 공격
 
         curShotDelay = 0;
     }
