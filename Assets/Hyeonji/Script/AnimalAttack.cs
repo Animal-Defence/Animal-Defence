@@ -25,8 +25,10 @@ public class AnimalAttack : MonoBehaviour
     // 무기로 공격
     private void Attack()
     {
-        float minLen = 2000.0f;
-        int minIndex = 0;
+        float e_minLen = 2000.0f;
+        float b_minLen = 2000.0f;
+        int e_minIndex = 0;
+        int b_minIndex = 0;
         if (curShotDelay < maxShotDelay)
             return;
 
@@ -34,27 +36,48 @@ public class AnimalAttack : MonoBehaviour
         Rigidbody2D rigid = weapon.GetComponent<Rigidbody2D>();
 
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy"); // Enemy Tag로 적들 찾기
-        if (enemys.Length == 0)
+        GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss"); // Enemy Tag로 적들 찾기
+        if (enemys.Length == 0 && bosses.Length == 0)
         {
             gameObject.transform.rotation = Quaternion.Euler(0, 0, 0); // 적이 없으면 위를 향해 
         }
         else
         {
-            for (int i = 0; i < enemys.Length; i++)
+            for (int i = 0; i < enemys.Length; i++) // Enemys
             {
-                if (minLen >= (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude)
+                if (e_minLen >= (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude)
                 {
                     if (enemys[i].transform.position.y > 0)
                     {
-                        minLen = (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude;
-                        minIndex = i;
+                        e_minLen = (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude;
+                        e_minIndex = i;
                     }
                 }
             }
-            Vector2 target = enemys[minIndex].transform.position;
+
+            for (int i = 0; i < bosses.Length; i++) // Bosses
+            {
+                if (b_minLen >= (bosses[i].transform.position - gameObject.transform.position).sqrMagnitude)
+                {
+                    if (bosses[i].transform.position.y > 0)
+                    {
+                        b_minLen = (bosses[i].transform.position - gameObject.transform.position).sqrMagnitude;
+                        b_minIndex = i;
+                    }
+                }
+            }
+            Vector2 target;
+            if (e_minLen < b_minLen) // Enemy가 Boss보다 더 가까우면
+            {
+                target = enemys[e_minIndex].transform.position;
+            }
+            else
+            {
+                target = bosses[b_minIndex].transform.position;
+            }
             Vector2 me = gameObject.transform.position;
             float angle = Mathf.Atan2(target.y - me.y, target.x - me.x) * Mathf.Rad2Deg;
-            gameObject.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+            gameObject.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward); // 적을 향해 회전
         }
         rigid.AddRelativeForce(Vector2.up * 15, ForceMode2D.Impulse); // 공격
 
