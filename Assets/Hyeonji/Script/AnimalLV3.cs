@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class AnimalLV3 : MonoBehaviour
 {
+    public Transform[] allAnmials = new Transform[10]; // 모든 동물
     public Transform[] Animals4; // 4단계 동물 프리펩
-    public GameObject Weaponpf; // 무기 프리펩
     private Rigidbody2D rigid;
     private int isDestroy = 0; // 충돌 횟수 확인
-    public float maxShotDelay; // 총알 쏘는 시간
-    public float curShotDelay;
     private Vector3 firstPosition; // 오브젝트 처음 위치 저장
     private Vector3 nowPosition; // 업그레이드 된 동물 생성될 위치
     private Vector3[] Positions = new Vector3[2]; // 충돌체 위치 저장
@@ -26,49 +24,8 @@ public class AnimalLV3 : MonoBehaviour
     {
         // Raycast 확인
         Debug.DrawRay(rigid.position, Vector3.down, new Color(1, 0, 0));
-        Attack();
-        ShotDelay();
     }
 
-    // 무기로 공격
-    private void Attack()
-    {
-        float minLen = 3000.0f;
-        int minIndex = 0;
-        if (curShotDelay < maxShotDelay)
-            return;
-
-        GameObject weapon = Instantiate(Weaponpf, firstPosition, transform.rotation); // 무기 생성
-        Rigidbody2D rigid = weapon.GetComponent<Rigidbody2D>();
-
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy"); // Enemy Tag로 적들 찾기
-        if (enemys.Length != 0)
-        {
-            for (int i = 0; i < enemys.Length; i++)
-            {
-                if (minLen >= (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude)
-                {
-                    minLen = (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude;
-                    minIndex = i;
-                }
-            }
-            Vector2 attackPos = enemys[minIndex].transform.position; // 가장 가까운 적의 x좌표
-            attackPos.x = attackPos.x - gameObject.transform.position.x; // 자기 자신 x좌표 - 적의 x좌표
-            rigid.AddForce(attackPos, ForceMode2D.Impulse); // 가까운 적을 향해 공격
-        }
-        else
-        {
-            rigid.AddForce(Vector2.up * 15, ForceMode2D.Impulse); // 적이없으면 그냥 위로 공격
-        }
-
-        curShotDelay = 0;
-    }
-
-    private void ShotDelay()
-    {
-        curShotDelay += Time.deltaTime;
-    }
-    // 마우스 클릭
     private void OnMouseDown()
     {
         // 충돌 오브젝트 0개 초기화
