@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Enemy_HP = 0;
+        curSpawnDelay = 0;
     }
 
     private void Update()

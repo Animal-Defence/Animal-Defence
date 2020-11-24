@@ -30,7 +30,7 @@ public class TestUGUI : MonoBehaviour
     public void testUBUISetting()
     {
         //데이터 삭제
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         
         
         

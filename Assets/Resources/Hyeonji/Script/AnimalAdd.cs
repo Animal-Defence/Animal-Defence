@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class AnimalAdd : MonoBehaviour
 {
-    
+
     public Button AnimalAddButton; // Animal+버튼
-    public Transform []Animals; // Animals 프리팹
+    public Transform[] Animals; // Animals 프리팹
+    public List<Transform> AnimalList = new List<Transform>();
     public Text DisNeedGold; // Animal생성할 때 필요한 골드 표시 text
     private int NeedGold = 10; // Animal생성할 때 필요한 골드 수
     private float[] GroundX = { -2.057f, -1.592f, -1.127f, -0.669f, -0.2154824f, 0.2433135f, 0.7021092f, 1.167554f, 1.629f, 2.091795f }; // Ground 위치 x좌표
@@ -16,11 +17,20 @@ public class AnimalAdd : MonoBehaviour
     // Animal+버튼 OnClick 이벤트
     void AnimalAddButtonClick()
     {
+        AnimalArr.callAnimalArr();
+        for (int i = 0; i < AnimalArr.AnimalArray.Length; i++)
+        {
+            //파일위치, 파일이름 바꾸면 오류.
+            string name = string.Format("Hyeonji/Prefabs/Animals/{0}/{1}", AnimalArr.AnimalArray[i], AnimalArr.AnimalArray[i]);
+            GameObject obj = Resources.Load(name) as GameObject;
+            AnimalList.Add(obj.transform);
+        }
+        Animals = AnimalList.ToArray();
         // 랜덤한 동물 (★동물 수 변경)
-        int RandomAnimal = Random.Range(0, 3);
+        int RandomAnimal = Random.Range(0, Animals.Length);
         // 랜덤한 위치
         int RandomX = Random.Range(0, 10);
-        if(GroundOK[RandomX] == true) // 생성 가능한 Ground이면
+        if (GroundOK[RandomX] == true) // 생성 가능한 Ground이면
         {
             makeAnimal(RandomAnimal, RandomX);
             isGroundNumber--;
@@ -46,6 +56,7 @@ public class AnimalAdd : MonoBehaviour
             }
         }
     }
+
 
     void makeAnimal(int ranAnimal, int ranX)
     {

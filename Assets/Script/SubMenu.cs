@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SubMenu : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class SubMenu : MonoBehaviour
     public void onClickStartBtn()
     {
         SubMenuView.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
+    public void onClickGoMenuBtn()
+    {
+        SceneManager.LoadScene("First");
         Time.timeScale = 1.0f;
     }
 }

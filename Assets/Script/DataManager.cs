@@ -28,7 +28,10 @@ public class DataManager
         Debug.Log(arrData);
         foreach (var data in arrData)
         {
-            this.dicData.Add(data.id, (T)data);
+            if (!this.dicData.ContainsKey(data.id))
+            {
+                this.dicData.Add(data.id, (T)data);
+            }
         }
     }
 
