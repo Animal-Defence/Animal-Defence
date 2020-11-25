@@ -9,7 +9,7 @@ public class FirstSceneButtonController : MonoBehaviour
 
     public void onClickStartGameBtn()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Game");
     }
 
     public void onClickClearDataBtn()
