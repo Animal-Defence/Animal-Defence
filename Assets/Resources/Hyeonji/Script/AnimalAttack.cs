@@ -12,15 +12,13 @@ public class AnimalAttack : MonoBehaviour
 
     void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();
         // 오브젝트 처음 위치 저장
         firstPosition = this.transform.position;
     }
 
     void Update()
     {
-        //Rigidbody2D rigid = weapon.GetComponent<Rigidbody2D>();
-        //Attack();
+        Attack();
         ShotDelay();
     }
     // 무기로 공격
@@ -30,6 +28,7 @@ public class AnimalAttack : MonoBehaviour
         float b_minLen = 2000.0f;
         int e_minIndex = 0;
         int b_minIndex = 0;
+
         if (curShotDelay < maxShotDelay)
             return;
 
@@ -38,7 +37,33 @@ public class AnimalAttack : MonoBehaviour
 
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy"); // Enemy Tag로 적들 찾기
         GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss"); // Enemy Tag로 적들 찾기
-        
+        var enemyList = new List<GameObject>();
+        enemyList.AddRange(enemys);
+        enemyList.AddRange(bosses);
+
+        if (enemyList.Count == 0)
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0); // 적이 없으면 위를 향해 
+        }
+        else
+        {
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                if (enemyList[i].transform.position.y > -3.4)
+                {
+                    if (e_minLen > enemyList[i].transform.position.y)
+                    {
+                        e_minLen = enemyList[i].transform.position.y;
+                        e_minIndex = i;
+                    }
+                }
+            }
+            Vector2 target = enemyList[e_minIndex].transform.position;
+            Vector2 me = gameObject.transform.position;
+            float angle = Mathf.Atan2(target.y - me.y, target.x - me.x) * Mathf.Rad2Deg;
+            gameObject.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward); // 적을 향해 회전
+        }
+        /*
         if (enemys.Length == 0 && bosses.Length == 0)
         {
             gameObject.transform.rotation = Quaternion.Euler(0, 0, 0); // 적이 없으면 위를 향해 
@@ -77,10 +102,7 @@ public class AnimalAttack : MonoBehaviour
             {
                 target = bosses[b_minIndex].transform.position;
             }
-            Vector2 me = gameObject.transform.position;
-            float angle = Mathf.Atan2(target.y - me.y, target.x - me.x) * Mathf.Rad2Deg;
-            gameObject.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward); // 적을 향해 회전
-        }
+        }*/
         rigid.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse); // 공격
 
         curShotDelay = 0;
@@ -88,14 +110,6 @@ public class AnimalAttack : MonoBehaviour
 
     private void ShotDelay()
     {
-        if (curShotDelay >= maxShotDelay)
-        {
-            curShotDelay = 0.0f;
-            GameObject weapon = Instantiate(Weaponpf, firstPosition, transform.rotation); // 무기 생성
-        }
-        else
-        {
-            curShotDelay += Time.deltaTime;
-        }
+        curShotDelay += Time.deltaTime;
     }
 }

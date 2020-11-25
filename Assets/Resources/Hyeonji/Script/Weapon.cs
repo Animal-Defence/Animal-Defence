@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour
     }
     private void Update()
     {
-        Attack();
+        //Attack();
     }
 
     void Attack()
