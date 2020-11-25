@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class AnimalBtnClick : MonoBehaviour
 {
@@ -10,6 +11,19 @@ public class AnimalBtnClick : MonoBehaviour
     public Button SelectedBtn2;
     public Button SelectedBtn3;
     public bool isSelected = true; // 동물이 등록 할 수 있는 상태인지
+
+    private void Start()
+    {
+        AnimalArr.callAnimalArr();
+        if (AnimalArr.AnimalArray.Contains("missionData.animal_sprite_name"))
+        {
+            Debug.Log("있음");
+        }
+        else
+        {
+            Debug.Log("없음");
+        }
+    }
 
     // 동물 버튼 클릭시 SelectedBtn에 등록
     public void ChangeImage()

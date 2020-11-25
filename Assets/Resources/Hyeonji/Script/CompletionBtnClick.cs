@@ -8,55 +8,55 @@ public class CompletionBtnClick : MonoBehaviour
     public Button SelectedBtn1;
     public Button SelectedBtn2;
     public Button SelectedBtn3;
-    private int AnimalNumber1;
-    private int AnimalNumber2;
-    private int AnimalNumber3;
+    private string AnimalName1;
+    private string AnimalName2;
+    private string AnimalName3;
 
     public void SettingCompleted()
     {
-        AnimalNumber1 = AnimalNumberFX(SelectedBtn1.image.sprite.name);
-        AnimalNumber2 = AnimalNumberFX(SelectedBtn2.image.sprite.name);
-        AnimalNumber3 = AnimalNumberFX(SelectedBtn3.image.sprite.name);
+        AnimalName1 = AnimalNumberFX(SelectedBtn1.image.sprite.name);
+        AnimalName2 = AnimalNumberFX(SelectedBtn2.image.sprite.name);
+        AnimalName3 = AnimalNumberFX(SelectedBtn3.image.sprite.name);
         // 데이터 보내기
     }
 
     // SelectedBtn에 있는 이미지 이름을 숫자로 반환
-    private int AnimalNumberFX(string AnimalImg)
+    private string AnimalNumberFX(string AnimalImg)
     {
-        int n = 0;
+        string name = "";
         switch (AnimalImg)
         {
             case "dogImg":
-                n = 0;
-                return n;
+                name = "dog"; 
+                return name;
             case "elephantImg":
-                n = 1;
-                return n;
+                name = "elephant";
+                return name;
             case "giraffeImg":
-                n = 2;
-                return n;
+                name = "giraffe";
+                return name;
             case "hippoImg":
-                n = 3;
-                return n;
+                name = "hippo";
+                return name;
             case "monkeyImg":
-                n = 4;
-                return n;
+                name = "monkey";
+                return name;
             case "pandaImg":
-                n = 5;
-                return n;
+                name = "panda";
+                return name;
             case "parrotImg":
-                n = 6;
-                return n;
+                name = "parrot";
+                return name;
             case "penguinImg":
-                n = 7;
-                return n;
+                name = "penguin";
+                return name;
             case "pigImg":
-                n = 8;
-                return n;
+                name = "pig";
+                return name;
             case "snakeImg":
-                n = 9;
-                return n;
+                name = "snake";
+                return name;
         }
-        return n;
+        return name;
     }
 }
