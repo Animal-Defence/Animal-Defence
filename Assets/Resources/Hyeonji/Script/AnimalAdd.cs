@@ -7,7 +7,10 @@ public class AnimalAdd : MonoBehaviour
 {
 
     public Button AnimalAddButton; // Animal+버튼
-    public Transform[] Animals; // Animals 프리팹
+    private Transform[] Animals; // 설정된 동물 3개만
+    public int AnimalNumber1 = 0;
+    public int AnimalNumber2 = 0;
+    public int AnimalNumber3 = 0;
     public List<Transform> AnimalList = new List<Transform>();
     public Text DisNeedGold; // Animal생성할 때 필요한 골드 표시 text
     private int NeedGold = 10; // Animal생성할 때 필요한 골드 수

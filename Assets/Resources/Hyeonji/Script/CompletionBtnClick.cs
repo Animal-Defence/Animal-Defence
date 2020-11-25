@@ -17,7 +17,7 @@ public class CompletionBtnClick : MonoBehaviour
         AnimalNumber1 = AnimalNumberFX(SelectedBtn1.image.sprite.name);
         AnimalNumber2 = AnimalNumberFX(SelectedBtn2.image.sprite.name);
         AnimalNumber3 = AnimalNumberFX(SelectedBtn3.image.sprite.name);
-        // 숫자 데이터 보내기
+        // 데이터 보내기
     }
 
     // SelectedBtn에 있는 이미지 이름을 숫자로 반환
