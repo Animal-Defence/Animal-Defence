@@ -29,7 +29,7 @@ public class UnlockAnimalView : MonoBehaviour
         subTextW.text = subTextB.text;
         AnimalImage.sprite = Resources.Load<Sprite>(string.Format("Animals/{0}", missionData.animal_sprite_name));
         //var result = Array.Exists(AnimalArr.AnimalArray,i => i.Equals(missionData.animal_sprite_name));
-        if (!AnimalArr.AnimalArray.Contains("(missionData.animal_sprite_name"))
+        if (!AnimalArr.AnimalArray.Contains("missionData.animal_sprite_name"))
         {
             AnimalArr.animalArrayString = string.Format("{0},{1}", AnimalArr.animalArrayString, missionData.animal_sprite_name);
             PlayerPrefs.SetString("AnimalArray", AnimalArr.animalArrayString);

@@ -12,7 +12,6 @@ public class SimpleMonster : MonoBehaviour
     public int health; // 체력
     public int enemy_point;
     public Sprite[] sprites; //평소이미지, 데미지를 입었을때의 이미지
-
     public Text enemeyHealth;
     SpriteRenderer spriteRenderer; 
     Rigidbody2D rigid; // 속력 조절
@@ -79,9 +78,18 @@ public class SimpleMonster : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Ground")
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
-
+            for (int i = 0; i < 10; i++)
+            {
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                string groundName = string.Format("ground{0}", i+1);
+                if (GameObject.Find(groundName) == null)
+                {
+                    Debug.Log(groundName);
+                    AnimalAdd animalAdd = GameObject.Find("AnimalAdd").GetComponent<AnimalAdd>();
+                    animalAdd.falseGround(i);
+                }
+            }
         }
         else if (collision.gameObject.tag == "Animal")
         {
@@ -92,7 +100,7 @@ public class SimpleMonster : MonoBehaviour
 
 
     }
-    
+
 
     public void Set_enemeyHealth()
     {

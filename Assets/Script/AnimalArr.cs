@@ -15,7 +15,7 @@ public class AnimalArr
         {
             //처음 동물은 parrot,penguin,pig 3마리.
             Debug.Log(null);
-            animalArrayString = "parrot,penguin,pig";
+            animalArrayString = "parrot,penguin,pig,dog,hippo";
             PlayerPrefs.SetString("AnimalArray", animalArrayString);
             PlayerPrefs.Save();
         }
