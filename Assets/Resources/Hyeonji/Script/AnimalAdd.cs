@@ -19,7 +19,8 @@ public class AnimalAdd : MonoBehaviour
     public int isGroundNumber = 10; // 생성 가는한 Ground 수
     // Animal+버튼 OnClick 이벤트
     void AnimalAddButtonClick()
-    {
+    {   
+        
         AnimalArr.callAnimalArr();
         for (int i = 0; i < AnimalArr.AnimalArray.Length; i++)
         {
@@ -29,14 +30,19 @@ public class AnimalAdd : MonoBehaviour
             AnimalList.Add(obj.transform);
         }
         Animals = AnimalList.ToArray();
+        
         // 랜덤한 동물 (★동물 수 변경)
         int RandomAnimal = Random.Range(0, Animals.Length);
         // 랜덤한 위치
         int RandomX = Random.Range(0, 10);
         if (GroundOK[RandomX] == true) // 생성 가능한 Ground이면
         {
-            makeAnimal(RandomAnimal, RandomX);
-            isGroundNumber--;
+            if (Player_Coin.coin_score >= NeedGold)
+            {
+                setCoin();
+                makeAnimal(RandomAnimal, RandomX);
+                isGroundNumber--;
+            }
         }
         else // 아니면 다른 생성 가능한 Ground에 생성
         {
@@ -60,6 +66,12 @@ public class AnimalAdd : MonoBehaviour
         }
     }
 
+    void setCoin()
+    {
+        Player_Coin player_Coin = GameObject.Find("Player_Coin").GetComponent<Player_Coin>();
+        Player_Coin.coin_score -= NeedGold;
+        player_Coin.coin_text_obj.text = "" + Player_Coin.coin_score;
+    }
 
     void makeAnimal(int ranAnimal, int ranX)
     {
@@ -67,6 +79,13 @@ public class AnimalAdd : MonoBehaviour
         GroundOK[ranX] = false; // Ground생성 불가능 표시
         NeedGold = NeedGold + 10; // 필요 골드 10 증가
         DisNeedGold.text = NeedGold.ToString(); // text 변경
+    }
+
+    public void falseGround(int i)
+    {
+        Debug.Log("kill "+ i);
+        GroundOK[i] = false;
+        isGroundNumber--;
     }
 
     void Start()

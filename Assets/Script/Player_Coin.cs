@@ -8,9 +8,17 @@ using Newtonsoft.Json;
 public class Player_Coin : MonoBehaviour
 {
 
-    public static int coin_score = 0; // 모두 공유.
+    public static int coin_score = 10; // 모두 공유.
     public Text coin_text_obj;
     //public static GameInfo gameInfo;
+
+
+    void Start()
+    {
+        coin_score = 10;
+        coin_text_obj.text = "" + coin_score;
+    }
+
 
     public void setNowPlayerCoin()
     {
