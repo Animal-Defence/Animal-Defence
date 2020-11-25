@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AnimalLV4 : MonoBehaviour
 {
-    public Transform[] allAnmials = new Transform[10]; // 모든 동물
-    public Transform[] Animals5; // 5단계 동물 프리펩
+    public Transform[] AllAnimals = new Transform[10]; // 모든 동물
+    public Transform[] Animals5 = new Transform[3]; // 5단계 동물 프리펩
     private Rigidbody2D rigid;
     private int isDestroy = 0; // 충돌 횟수 확인
     private Vector3 firstPosition; // 오브젝트 처음 위치 저장
@@ -17,6 +17,10 @@ public class AnimalLV4 : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         // 오브젝트 처음 위치 저장
         firstPosition = this.transform.position;
+        // 동물설정
+        Animals5[0] = AllAnimals[CompletionBtnClick.AnimalNumber1];
+        Animals5[1] = AllAnimals[CompletionBtnClick.AnimalNumber2];
+        Animals5[2] = AllAnimals[CompletionBtnClick.AnimalNumber3];
     }
 
     // Update is called once per frame
@@ -71,7 +75,7 @@ public class AnimalLV4 : MonoBehaviour
                         }
                     }
                     // 5단계 동물 랜덤 업그레이드 (★동물 수 변경)
-                    int RandomAnimal = Random.Range(0, 3);
+                    int RandomAnimal = Random.Range(0, Animals5.Length);
                     Instantiate(Animals5[RandomAnimal], new Vector3(nowPosition.x, nowPosition.y + 0.46f, 0), Quaternion.identity);
                     // 동물 생성 가능한 땅 정보 업데이트
                     switch (firstPosition.x)

@@ -11,17 +11,25 @@ public class AnimalBtnClick : MonoBehaviour
     public Button SelectedBtn2;
     public Button SelectedBtn3;
     public bool isSelected = true; // 동물이 등록 할 수 있는 상태인지
+    private Image myImage;
 
     private void Start()
     {
+        myImage = GetComponent<Image>();
         AnimalArr.callAnimalArr();
-        if (AnimalArr.AnimalArray.Contains("missionData.animal_sprite_name"))
+        if (AnimalArr.AnimalArray.Contains(myImage.sprite.name.Substring(0,myImage.sprite.name.Length-3)))
         {
-            Debug.Log("있음");
+            Color color = myImage.color;
+            color.a = 1.0f;
+            myImage.color = color;
+            GetComponent<Button>().interactable = true;
         }
         else
         {
-            Debug.Log("없음");
+            Color color = myImage.color;
+            color.a = 0.5f;
+            myImage.color = color; 
+            GetComponent<Button>().interactable = false;
         }
     }
 

@@ -15,7 +15,7 @@ public class SubMenu : MonoBehaviour
 
     public void onClickGoMenuBtn()
     {
-        SceneManager.LoadScene("First");
+        SceneManager.LoadScene("Main");
         Time.timeScale = 1.0f;
     }
 }
