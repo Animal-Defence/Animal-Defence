@@ -83,6 +83,7 @@ public class AnimalAdd : MonoBehaviour
 
     public void falseGround(int i)
     {
+        Debug.Log("kill "+ i);
         GroundOK[i] = false;
         isGroundNumber--;
     }

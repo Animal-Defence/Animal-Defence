@@ -15,7 +15,7 @@ public class SimpleMonster : MonoBehaviour
     public Text enemeyHealth;
     SpriteRenderer spriteRenderer; 
     Rigidbody2D rigid; // 속력 조절
-
+    AnimalAdd animalAdd;
     //public string coin_string;
 
     private void Awake() //초기화
@@ -32,7 +32,7 @@ public class SimpleMonster : MonoBehaviour
 
     void Start()
     {
-        
+        animalAdd = GameObject.Find("AnimalAdd").GetComponent<AnimalAdd>();
     }
 
     void onHit(int dmg)
@@ -65,6 +65,77 @@ public class SimpleMonster : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        switch (collision.gameObject.tag)
+        {
+            case "Floor":
+                Destroy(gameObject);
+                break;
+            case "GamerBullet":
+                Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+                //현지의 스크립트에서 총알의 데미지를 가져옴.
+                //int dmg = 가져온 총알의 데미지.
+                onHit(bullet.dmg);
+                Destroy(collision.gameObject);
+                break;
+            case "Animal":
+                //동물의 단계를 낮춘다.
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                break;
+            case "Ground1":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(0);
+                break;
+            case "Ground2":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(1);
+                break;
+            case "Ground3":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(2);
+                break;
+            case "Ground4":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(3);
+                break;
+            case "Ground5":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(4);
+                break;
+            case "Ground6":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(5);
+                break;
+            case "Ground7":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(6);
+                break;
+            case "Ground8":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(7);
+                break;
+            case "Ground9":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(8);
+                break;
+            case "Ground10":
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                animalAdd.falseGround(9);
+                break;
+            default:
+                break;
+        }
+        /*
         if (collision.gameObject.tag == "Floor"){
             Destroy(gameObject);//삭제하는 함수
             //플레이어의 HP 깎는다
@@ -97,10 +168,9 @@ public class SimpleMonster : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
-
+        */
 
     }
-
 
     public void Set_enemeyHealth()
     {
