@@ -7,10 +7,8 @@ public class AnimalAdd : MonoBehaviour
 {
 
     public Button AnimalAddButton; // Animal+버튼
-    private Transform[] Animals; // 설정된 동물 3개만
-    public int AnimalNumber1 = 0;
-    public int AnimalNumber2 = 0;
-    public int AnimalNumber3 = 0;
+    public Transform[] AllAnimals;
+    private Transform[] Animals = new Transform[3]; // 설정된 동물 3개만
     public List<Transform> AnimalList = new List<Transform>();
     public Text DisNeedGold; // Animal생성할 때 필요한 골드 표시 text
     private int NeedGold = 10; // Animal생성할 때 필요한 골드 수
@@ -20,7 +18,7 @@ public class AnimalAdd : MonoBehaviour
     // Animal+버튼 OnClick 이벤트
     void AnimalAddButtonClick()
     {   
-        
+        /*
         AnimalArr.callAnimalArr();
         for (int i = 0; i < AnimalArr.AnimalArray.Length; i++)
         {
@@ -30,6 +28,7 @@ public class AnimalAdd : MonoBehaviour
             AnimalList.Add(obj.transform);
         }
         Animals = AnimalList.ToArray();
+        */
         
         // 랜덤한 동물 (★동물 수 변경)
         int RandomAnimal = Random.Range(0, Animals.Length);
@@ -100,6 +99,12 @@ public class AnimalAdd : MonoBehaviour
         {
             Debug.Log("AddButtonMissing");
         }
+
+        Debug.Log("CompletionBtnClick : " + CompletionBtnClick.AnimalNumber1 + " " + CompletionBtnClick.AnimalNumber2 + " " + CompletionBtnClick.AnimalNumber3);
+        // 동물설정
+        Animals[0] = AllAnimals[CompletionBtnClick.AnimalNumber1];
+        Animals[1] = AllAnimals[CompletionBtnClick.AnimalNumber2];
+        Animals[2] = AllAnimals[CompletionBtnClick.AnimalNumber3];
     }
 
 }
