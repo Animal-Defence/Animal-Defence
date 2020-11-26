@@ -16,6 +16,7 @@ public class SimpleMonster : MonoBehaviour
     SpriteRenderer spriteRenderer; 
     Rigidbody2D rigid; // 속력 조절
     AnimalAdd animalAdd;
+    PlayerHP playerHP;
     //public string coin_string;
 
     private void Awake() //초기화
@@ -23,7 +24,14 @@ public class SimpleMonster : MonoBehaviour
         //if (GameObject.Find("Boss_Enemy").GetComponent<BossMonster>())
         //    Set_BossEnemeyHealth();
         //else 
+        if (gameObject.tag == "Boss")
+        {
+            Set_BossEnemeyHealth();
+        }
+        else
+        {
             Set_enemeyHealth();
+        }
         enemeyHealth.text = "HP" + health;
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -33,6 +41,7 @@ public class SimpleMonster : MonoBehaviour
     void Start()
     {
         animalAdd = GameObject.Find("AnimalAdd").GetComponent<AnimalAdd>();
+        playerHP = GameObject.Find("PlayerHP").GetComponent<PlayerHP>();
     }
 
     void onHit(int dmg)
@@ -68,6 +77,7 @@ public class SimpleMonster : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Floor":
+                playerHP.MinusHP();
                 Destroy(gameObject);
                 break;
             case "GamerBullet":
@@ -76,11 +86,6 @@ public class SimpleMonster : MonoBehaviour
                 //int dmg = 가져온 총알의 데미지.
                 onHit(bullet.dmg);
                 Destroy(collision.gameObject);
-                break;
-            case "Animal":
-                //동물의 단계를 낮춘다.
-                Destroy(collision.gameObject);
-                Destroy(gameObject);
                 break;
             case "Ground1":
                 Destroy(collision.gameObject);
@@ -175,13 +180,13 @@ public class SimpleMonster : MonoBehaviour
     public void Set_enemeyHealth()
     {
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        health += (gameManager.Enemy_HP/5) * 1;
+        health += gameManager.Enemy_HP * 2;
     }
 
     public void Set_BossEnemeyHealth()
     {
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        health += gameManager.Enemy_HP;
+        health += gameManager.Enemy_HP * 10;
     }
 
     

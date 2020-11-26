@@ -38,8 +38,6 @@ public class BossMonster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        Fire();
         Reload();
         //나중에 캡슐화시킬예정!
         setSkillTime(plusTime);
@@ -113,23 +111,6 @@ public class BossMonster : MonoBehaviour
     {
         curShotDelay += Time.deltaTime;
         
-    }
-
-    void Fire()
-    {
-        if (curShotDelay < maxShotDelay)
-            return;
-        //GameObject bullet = Instantiate(bulletObj, transform.position, targetAnimal.transform.rotation);
-        GameObject bullet = Instantiate(bulletObj, transform.position, transform.rotation);
-        Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-
-        //float angle = Mathf.Atan2(0f, 0f) * Mathf.Rad2Deg;
-        //bullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        rigid.AddForce(Vector2.down * 10, ForceMode2D.Impulse);
-
-        curShotDelay = 0;
-
     }
 
 }

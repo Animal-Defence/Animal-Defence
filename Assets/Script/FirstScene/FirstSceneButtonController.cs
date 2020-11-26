@@ -37,6 +37,7 @@ public class FirstSceneButtonController : MonoBehaviour
     public void onClickNoBtn()
     {
         ClearDataView.SetActive(false);
+        Application.Quit();
     }
     public void readDeveloperInfo()
     {
