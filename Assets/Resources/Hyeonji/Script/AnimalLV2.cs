@@ -135,6 +135,40 @@ public class AnimalLV2 : MonoBehaviour
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Boss" || collision.gameObject.tag == "MeteorBullet")
         {
             Destroy(gameObject);
+            switch (firstPosition.x)
+            {
+                case -2.057f:
+                    updateGround(0);
+                    break;
+                case -1.592f:
+                    updateGround(1);
+                    break;
+                case -1.127f:
+                    updateGround(2);
+                    break;
+                case -0.669f:
+                    updateGround(3);
+                    break;
+                case -0.2154824f:
+                    updateGround(4);
+                    break;
+                case 0.2433135f:
+                    updateGround(5);
+                    break;
+                case 0.7021092f:
+                    updateGround(6);
+                    break;
+                case 1.167554f:
+                    updateGround(7);
+                    break;
+                case 1.629f:
+                    updateGround(8);
+                    break;
+                case 2.091795f:
+                    updateGround(9);
+                    break;
+
+            }
         }
     }
 }
