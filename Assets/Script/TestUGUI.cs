@@ -15,6 +15,7 @@ public class TestUGUI : MonoBehaviour
     public RectTransform contents;
     public static GameInfo gameInfo;
     private List<MissionListItem> missionListItems = new List<MissionListItem>();
+    public static int clearmissionNum=0;
 
     void Start()
     {
@@ -31,9 +32,9 @@ public class TestUGUI : MonoBehaviour
     {
         //데이터 삭제
         //PlayerPrefs.DeleteAll();
-        
-        
-        
+        clearmissionNum = 0;
+
+
         //var data = DataManager.GetInstance().GetData<MissionData>(0);
         //Debug.LogFormat("{0} {1} {2}", data.id, data.sprite_name, data.mission_name);
 
@@ -147,6 +148,7 @@ public class TestUGUI : MonoBehaviour
                     {
                         Debug.LogFormat("{0} {1}", index, foundListIten);
                         foundListIten.binderCliam.ChangeState(UIBinder_BtnCliam.eBtnState.Success);
+                        clearmissionNum++;
                     }
                 }
             }

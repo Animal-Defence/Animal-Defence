@@ -15,6 +15,7 @@ public class SubMenu : MonoBehaviour
 
     public void onClickGoMenuBtn()
     {
+        GameObject.Find("EnemyDeathManager").GetComponent<EnemyDeathManager>().setNewEnemyDeath();
         SceneManager.LoadScene("Main");
         Time.timeScale = 1.0f;
     }

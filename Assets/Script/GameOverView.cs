@@ -13,6 +13,8 @@ public class GameOverView : MonoBehaviour
     {
         KillBossText.text = "" + EnemyDeathManager.killBossNum;
         KillEnemyText.text = "" + EnemyDeathManager.killEnemyNum;
+        EnemyDeathManager enemyDeathManager= GameObject.Find("EnemyDeathManager").GetComponent<EnemyDeathManager>();
+        GameObject.Find("EnemyDeathManager").GetComponent<EnemyDeathManager>().setNewEnemyDeath();
     }
 
 

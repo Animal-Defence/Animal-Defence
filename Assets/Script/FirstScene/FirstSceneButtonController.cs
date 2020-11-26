@@ -8,6 +8,7 @@ public class FirstSceneButtonController : MonoBehaviour
 {
     public GameObject ClearDataView;
     public GameObject DeveloperInfoView;
+    public GameObject PlayerScoreVIew;
     public void onClickStartGameBtn()
     {
         SceneManager.LoadScene("Game");
@@ -39,6 +40,12 @@ public class FirstSceneButtonController : MonoBehaviour
         ClearDataView.SetActive(false);
         Application.Quit();
     }
+
+    public void onClickPlayerScoreBtn()
+    {
+        PlayerScoreVIew.SetActive(true);
+    }
+
     public void readDeveloperInfo()
     {
         var json = PlayerPrefs.GetString("game_info");//파일 이미 만들어져 있기 때문에 null처리안함
