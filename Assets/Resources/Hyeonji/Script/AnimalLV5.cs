@@ -42,4 +42,12 @@ public class AnimalLV5 : MonoBehaviour
         RaycastHit2D[] rayDown = Physics2D.RaycastAll(rigid.position, Vector3.down, 1);
         this.transform.position = firstPosition;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // 적이나 보스랑 부딪히면 사라짐
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Boss" || collision.gameObject.tag == "MeteorBullet")
+        {
+            Destroy(gameObject); 
+        }
+    }
 }

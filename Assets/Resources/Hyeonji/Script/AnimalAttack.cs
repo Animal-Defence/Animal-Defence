@@ -24,10 +24,8 @@ public class AnimalAttack : MonoBehaviour
     // 무기로 공격
     private void Attack()
     {
-        float e_minLen = 2000.0f;
-        float b_minLen = 2000.0f;
-        int e_minIndex = 0;
-        int b_minIndex = 0;
+        float minLen = 2000.0f;
+        int minIndex = 0;
 
         if (curShotDelay < maxShotDelay)
             return;
@@ -49,60 +47,20 @@ public class AnimalAttack : MonoBehaviour
         {
             for (int i = 0; i < enemyList.Count; i++)
             {
-                if (enemyList[i].transform.position.y > -3.4)
+                if (enemyList[i].transform.position.y > -3.8) // 땅보다 위
                 {
-                    if (e_minLen > enemyList[i].transform.position.y)
+                    if (minLen > enemyList[i].transform.position.y)
                     {
-                        e_minLen = enemyList[i].transform.position.y;
-                        e_minIndex = i;
+                        minLen = enemyList[i].transform.position.y;
+                        minIndex = i;
                     }
                 }
             }
-            Vector2 target = enemyList[e_minIndex].transform.position;
+            Vector2 target = enemyList[minIndex].transform.position;
             Vector2 me = gameObject.transform.position;
             float angle = Mathf.Atan2(target.y - me.y, target.x - me.x) * Mathf.Rad2Deg;
             gameObject.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward); // 적을 향해 회전
         }
-        /*
-        if (enemys.Length == 0 && bosses.Length == 0)
-        {
-            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0); // 적이 없으면 위를 향해 
-        }
-        else
-        {
-            for (int i = 0; i < enemys.Length; i++) // Enemys
-            {
-                if (e_minLen >= (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude)
-                {
-                    if (enemys[i].transform.position.y > 0)
-                    {
-                        e_minLen = (enemys[i].transform.position - gameObject.transform.position).sqrMagnitude;
-                        e_minIndex = i;
-                    }
-                }
-            }
-            
-            for (int i = 0; i < bosses.Length; i++) // Bosses
-            {
-                if (b_minLen >= (bosses[i].transform.position - gameObject.transform.position).sqrMagnitude)
-                {
-                    if (bosses[i].transform.position.y > 0)
-                    {
-                        b_minLen = (bosses[i].transform.position - gameObject.transform.position).sqrMagnitude;
-                        b_minIndex = i;
-                    }
-                }
-            }
-            Vector2 target;
-            if (e_minLen < b_minLen) // Enemy가 Boss보다 더 가까우면
-            {
-                target = enemys[e_minIndex].transform.position;
-            }
-            else
-            {
-                target = bosses[b_minIndex].transform.position;
-            }
-        }*/
         rigid.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse); // 공격
 
         curShotDelay = 0;
