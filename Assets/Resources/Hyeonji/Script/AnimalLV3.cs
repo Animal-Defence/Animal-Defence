@@ -127,4 +127,13 @@ public class AnimalLV3 : MonoBehaviour
         GameObject.Find("AnimalAdd").GetComponent<AnimalAdd>().GroundOK[n] = true;
         GameObject.Find("AnimalAdd").GetComponent<AnimalAdd>().isGroundNumber++;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // 적이나 보스랑 부딪히면 사라짐
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Boss" || collision.gameObject.tag == "MeteorBullet")
+        {
+            Destroy(gameObject);
+        }
+    }
 }
