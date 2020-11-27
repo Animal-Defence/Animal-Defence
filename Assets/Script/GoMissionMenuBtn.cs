@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class GoMissionMenuBtn : MonoBehaviour
 {
    public GameObject MissionMenuView;
-
+   
    public void onClickGoMissionMenuBtn()
     {
         MissionMenuView.SetActive(true);
@@ -14,4 +15,7 @@ public class GoMissionMenuBtn : MonoBehaviour
         GameObject.Find("Player_Coin").GetComponent<Player_Coin>().setNowPlayerCoin();
         GameObject.Find("TestUGUI").GetComponent<TestUGUI>().testUBUISetting();
     }
+
+    
+
 }

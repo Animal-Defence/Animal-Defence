@@ -17,7 +17,7 @@ public class TestUGUI : MonoBehaviour
     private List<MissionListItem> missionListItems = new List<MissionListItem>();
     public static int clearmissionNum=0;
     public int GamePlayCount;
-
+    public int readDeveloperCount = 0;
     void Start()
     {
         //데이터 로드
@@ -33,14 +33,8 @@ public class TestUGUI : MonoBehaviour
     public void testUBUISetting()
     {
         //데이터 삭제
-        //PlayerPrefs.DeleteAll();
         clearmissionNum = 0;
-        SetGamePlayCount();
-
-        //var data = DataManager.GetInstance().GetData<MissionData>(0);
-        //Debug.LogFormat("{0} {1} {2}", data.id, data.sprite_name, data.mission_name);
-
-
+       
         //info를 로드합니다
         var json = PlayerPrefs.GetString("game_info");
         
@@ -102,6 +96,10 @@ public class TestUGUI : MonoBehaviour
         {
             setMissionBtnState(i);
         }
+
+
+        SetGamePlayCount();
+        setReadDeveloperInfo();
 
     }
 
@@ -195,6 +193,23 @@ public class TestUGUI : MonoBehaviour
                 TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(1, GamePlayCount));//없을경우 새로 만들어 넣는다.
             }
             var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 string형태로 저장.
+            PlayerPrefs.SetString("game_info", gameInfoJson);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void setReadDeveloperInfo()
+    {
+        readDeveloperCount = PlayerPrefs.GetInt("readDeveloperInfo");
+        
+        var json = PlayerPrefs.GetString("game_info");//파일 이미 만들어져 있기 때문에 null처리안함
+        TestUGUI.gameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
+        var foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == 4);
+        if (foundMissionInfo == null)//이미 있다.
+        {
+            Debug.Log("readDeveloperCount " + readDeveloperCount);
+            TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(4, readDeveloperCount));//없을경우 새로 만들어 넣는다.
+            var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 storing형태로 저장.
             PlayerPrefs.SetString("game_info", gameInfoJson);
             PlayerPrefs.Save();
         }
