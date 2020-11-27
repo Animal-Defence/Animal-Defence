@@ -17,8 +17,11 @@ public class AnimalAdd : MonoBehaviour
     public int isGroundNumber = 10; // 생성 가는한 Ground 수
     // Animal+버튼 OnClick 이벤트
     void AnimalAddButtonClick()
-    {   
-        /*
+    {
+        Player_Coin player_Coin = GameObject.Find("Player_Coin").GetComponent<Player_Coin>();
+        if (Player_Coin.coin_score >= NeedGold)
+        {
+            /*
         AnimalArr.callAnimalArr();
         for (int i = 0; i < AnimalArr.AnimalArray.Length; i++)
         {
@@ -29,38 +32,40 @@ public class AnimalAdd : MonoBehaviour
         }
         Animals = AnimalList.ToArray();
         */
-        
-        // 랜덤한 동물 (★동물 수 변경)
-        int RandomAnimal = Random.Range(0, Animals.Length);
-        // 랜덤한 위치
-        int RandomX = Random.Range(0, 10);
-        if (GroundOK[RandomX] == true) // 생성 가능한 Ground이면
-        {
-            if (Player_Coin.coin_score >= NeedGold)
+
+            // 랜덤한 동물 (★동물 수 변경)
+            int RandomAnimal = Random.Range(0, Animals.Length);
+            // 랜덤한 위치
+            int RandomX = Random.Range(0, 10);
+            if (GroundOK[RandomX] == true) // 생성 가능한 Ground이면
             {
-                setCoin();
-                makeAnimal(RandomAnimal, RandomX);
-                isGroundNumber--;
-            }
-        }
-        else // 아니면 다른 생성 가능한 Ground에 생성
-        {
-            if (isGroundNumber == 0) // 생성 가능한 Ground 없음
-            {
-                Debug.Log("생성불가능");
-            }
-            else
-            {
-                while (true)
+                if (Player_Coin.coin_score >= NeedGold)
                 {
-                    RandomX = Random.Range(0, 10);
-                    if (GroundOK[RandomX] == true)
-                    { // 생성 가능한 Ground발견
-                        isGroundNumber--;
-                        break;
-                    }
+                    setCoin();
+                    makeAnimal(RandomAnimal, RandomX);
+                    isGroundNumber--;
                 }
-                makeAnimal(RandomAnimal, RandomX);
+            }
+            else // 아니면 다른 생성 가능한 Ground에 생성
+            {
+                if (isGroundNumber == 0) // 생성 가능한 Ground 없음
+                {
+                    Debug.Log("생성불가능");
+                }
+                else
+                {
+                    while (true)
+                    {
+                        RandomX = Random.Range(0, 10);
+                        if (GroundOK[RandomX] == true)
+                        { // 생성 가능한 Ground발견
+                            isGroundNumber--;
+                            break;
+                        }
+                    }
+                    setCoin();
+                    makeAnimal(RandomAnimal, RandomX);
+                }
             }
         }
     }
