@@ -97,10 +97,6 @@ public class TestUGUI : MonoBehaviour
             setMissionBtnState(i);
         }
 
-
-        SetGamePlayCount();
-        setReadDeveloperInfo();
-
     }
 
 
@@ -174,7 +170,7 @@ public class TestUGUI : MonoBehaviour
         }
     }
 
-    public void SetGamePlayCount()
+    public void setGamePlayCount()
     {
         var json = PlayerPrefs.GetString("game_info");//파일 이미 만들어져 있기 때문에 null처리안함
         TestUGUI.gameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
@@ -201,18 +197,22 @@ public class TestUGUI : MonoBehaviour
     public void setReadDeveloperInfo()
     {
         readDeveloperCount = PlayerPrefs.GetInt("readDeveloperInfo");
-        
+        Debug.Log("readDeveloperCount " + readDeveloperCount);
         var json = PlayerPrefs.GetString("game_info");//파일 이미 만들어져 있기 때문에 null처리안함
         TestUGUI.gameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
         var foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == 4);
         if (foundMissionInfo == null)//이미 있다.
         {
-            Debug.Log("readDeveloperCount " + readDeveloperCount);
+            
             TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(4, readDeveloperCount));//없을경우 새로 만들어 넣는다.
-            var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 storing형태로 저장.
-            PlayerPrefs.SetString("game_info", gameInfoJson);
-            PlayerPrefs.Save();
+
         }
+        else { 
+            TestUGUI.gameInfo.missionInfos[4].doingVal = readDeveloperCount;
+        }
+        var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 storing형태로 저장.
+        PlayerPrefs.SetString("game_info", gameInfoJson);
+        PlayerPrefs.Save();
     }
 
 }
