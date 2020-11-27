@@ -36,36 +36,41 @@ public class EnemyDeathManager : MonoBehaviour
         killBosALLNum += killBossNum;
         killEnemyALLNum += killEnemyNum;
         var json = PlayerPrefs.GetString("game_info");//파일 이미 만들어져 있기 때문에 null처리안함
-        TestUGUI.gameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
+        
+            TestUGUI.gameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
         //일반 죽음 수
-        var foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == 2);
-        if (foundMissionInfo != null)//이미 있다.
+        if (TestUGUI.gameInfo != null)
         {
-            int index = TestUGUI.gameInfo.missionInfos.FindIndex(x => x.id == 2);
-            TestUGUI.gameInfo.missionInfos[index].doingVal = killEnemyALLNum;
-        }
-        else//아직없다.
-        {
-            Debug.Log("아직없다");
-            TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(2, killEnemyALLNum));//없을경우 새로 만들어 넣는다.
-        }
+            var foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == 2);
+            if (foundMissionInfo != null)//이미 있다.
+            {
+                int index = TestUGUI.gameInfo.missionInfos.FindIndex(x => x.id == 2);
+                TestUGUI.gameInfo.missionInfos[index].doingVal = killEnemyALLNum;
+            }
+            else//아직없다.
+            {
+                Debug.Log("아직없다");
+                TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(2, killEnemyALLNum));//없을경우 새로 만들어 넣는다.
+            }
 
-        //보스 죽음 수
-        foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == 3);
-        if (foundMissionInfo != null)//이미 있다.
-        {
-            int index = TestUGUI.gameInfo.missionInfos.FindIndex(x => x.id == 3);
-            TestUGUI.gameInfo.missionInfos[index].doingVal = killBosALLNum;
-        }
-        else//아직없다.
-        {
-            TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(3, killBosALLNum));//없을경우 새로 만들어 넣는다.
-        }
-        var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 string형태로 저장.
+            //보스 죽음 수
+            foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == 3);
+            if (foundMissionInfo != null)//이미 있다.
+            {
+                int index = TestUGUI.gameInfo.missionInfos.FindIndex(x => x.id == 3);
+                TestUGUI.gameInfo.missionInfos[index].doingVal = killBosALLNum;
+            }
+            else//아직없다.
+            {
+                TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(3, killBosALLNum));//없을경우 새로 만들어 넣는다.
+            }
+            var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 string형태로 저장.
 
-        saveKillNum();
-        PlayerPrefs.SetString("game_info", gameInfoJson);
-        PlayerPrefs.Save();
+            saveKillNum();
+            PlayerPrefs.SetString("game_info", gameInfoJson);
+            PlayerPrefs.Save();
+        }
     }
+
 
 }
