@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public int playerPoint;
 
     public int Enemy_HP;
+    public int spawnCount = 0;
+    public int spawnBossCount = 0;
 
     //public Text Coin_score;//Coin의 점수
 
@@ -43,13 +45,22 @@ public class GameManager : MonoBehaviour
             maxSpqwnDelay = Random.Range(0.5f, 3f); // 랜덤시간으로 생성.
 
             curSpawnDelay = 0;
+            spawnCount++;
+            if(spawnCount%10 == 0)
+            {
+                if (maxSpqwnDelay >= 1.5f)
+                {
+                    maxSpqwnDelay -= 0.2f;
+                }
+            }
         }
 
         //보스 스폰 시간
-        if(bossSpawnDelay > 7f)
+        if(bossSpawnDelay > 30f + spawnBossCount *10f)
         {
             spawnBoss();
             bossSpawnDelay = 0;
+            spawnBossCount++;
         }
 
     }

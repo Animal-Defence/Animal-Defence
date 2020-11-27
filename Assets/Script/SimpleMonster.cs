@@ -17,6 +17,7 @@ public class SimpleMonster : MonoBehaviour
     Rigidbody2D rigid; // 속력 조절
     AnimalAdd animalAdd;
     PlayerHP playerHP;
+    GameManager gameManager;
     //public string coin_string;
 
     private void Awake() //초기화
@@ -42,6 +43,7 @@ public class SimpleMonster : MonoBehaviour
     {
         animalAdd = GameObject.Find("AnimalAdd").GetComponent<AnimalAdd>();
         playerHP = GameObject.Find("PlayerHP").GetComponent<PlayerHP>();
+        
     }
 
     void onHit(int dmg)
@@ -179,61 +181,23 @@ public class SimpleMonster : MonoBehaviour
 
     public void Set_enemeyHealth()
     {
-        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         health += gameManager.Enemy_HP * 2;
+        if (health >= 100000)
+        {
+            health = 100000;
+        }
     }
 
     public void Set_BossEnemeyHealth()
     {
-        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         health += gameManager.Enemy_HP * 10;
-    }
-
-    
-    public void Set_Enemy_Speed_Plus()
-    {
-        //속도높임
-    }
-
-    public void Set_Enemy_Nomal()
-    {
-        //속도원래대로
-    }
-
-
-    // Start is called before the first frame update
-
-
-    /*
-    //중력 사용할때는 2D붙인다.
-    //충돌한 순간
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-        if (collision.collider.tag == "Floor")
+        if(health >= 100000)
         {
-            Debug.Log("여기서 자신을 삭제하는 코드.");
-            //Destroy(collision.gameObject);//닿은 물체 삭제
-            Destroy(this.gameObject,1);//1초뒤 자신삭제(floor를 부수고 사라지는 모션을 넣을예정)
-            //충돌 이벤트 처리
+            health = 100000;
         }
-
-        //동물에게 닿을경우
-        //1. 동물에게 데미지를 준다
-        //2. 자신은 삭제된다.
-        //3. 마지막 동물을 죽였을 경우, 해당 동물의 floor는 더이상 사용할수 없다.
-
-
     }
-    */
-
-
-    /*
-     *OnCollstionStay // 충돌하는 순간 
-     * OnCollisionExit // 충돌했다가 분리되는 순간
-     *
-     */
-
 
 
 }

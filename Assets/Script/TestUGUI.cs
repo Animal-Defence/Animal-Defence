@@ -16,6 +16,7 @@ public class TestUGUI : MonoBehaviour
     public static GameInfo gameInfo;
     private List<MissionListItem> missionListItems = new List<MissionListItem>();
     public static int clearmissionNum=0;
+    public int GamePlayCount;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class TestUGUI : MonoBehaviour
         //겟 데이타 없으면 로드??
         DataManager.GetInstance().LoadData<MissionData>("Data/mission_data");
         testUBUISetting();
+        GamePlayCount = PlayerPrefs.GetInt("GamePlayCount");
     }
 
     public void testUBUISetting()
@@ -33,7 +35,7 @@ public class TestUGUI : MonoBehaviour
         //데이터 삭제
         //PlayerPrefs.DeleteAll();
         clearmissionNum = 0;
-
+        SetGamePlayCount();
 
         //var data = DataManager.GetInstance().GetData<MissionData>(0);
         //Debug.LogFormat("{0} {1} {2}", data.id, data.sprite_name, data.mission_name);
@@ -172,6 +174,27 @@ public class TestUGUI : MonoBehaviour
                 return;
             Destroy(child.gameObject);
         }
+    }
+
+    public void SetGamePlayCount()
+    {
+        var json = PlayerPrefs.GetString("game_info");//파일 이미 만들어져 있기 때문에 null처리안함
+        TestUGUI.gameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
+        //일반 죽음 수
+        var foundMissionInfo = TestUGUI.gameInfo.missionInfos.Find(x => x.id == 1);
+        if (foundMissionInfo != null)//이미 있다.
+        {
+            int index = TestUGUI.gameInfo.missionInfos.FindIndex(x => x.id == 1);
+            TestUGUI.gameInfo.missionInfos[index].doingVal = GamePlayCount;
+        }
+        else//아직없다.
+        {
+            Debug.Log("아직없다");
+            TestUGUI.gameInfo.missionInfos.Add(new MissionInfo(1, GamePlayCount));//없을경우 새로 만들어 넣는다.
+        }
+        var gameInfoJson = JsonConvert.SerializeObject(TestUGUI.gameInfo);//json을 string형태로 저장.
+        PlayerPrefs.SetString("game_info", gameInfoJson);
+        PlayerPrefs.Save();
     }
 
 }

@@ -13,7 +13,7 @@
     "id": "1",
     "sprite_name": "star_image",
     "mission_name": "{0}번 플레이하기",
-    "goal_val": "1",
+    "goal_val": "5",
     "reward_id": "0",
     "reward_val": "1",
     "animal_sprite_name": "giraffe",

@@ -9,10 +9,6 @@ public class FirstSceneButtonController : MonoBehaviour
     public GameObject ClearDataView;
     public GameObject DeveloperInfoView;
     public GameObject PlayerScoreVIew;
-    public void onClickStartGameBtn()
-    {
-        SceneManager.LoadScene("Game");
-    }
 
     public void onClickClearDataBtn()
     {
